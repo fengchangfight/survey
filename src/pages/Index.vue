@@ -32,7 +32,7 @@
                 <label class="sv-title">Q2. 请问您2019年是否到过中国旅游？ </label>
               </div>
               <div style="max-width:200px;" >
-                <q-item tag="label" v-ripple>
+                <q-item  tag="label" v-ripple>
                   <q-item-section avatar>
                     <q-radio @input="checkAndGo" v-model="q2_answer" val=1 color="teal" />
                   </q-item-section>
@@ -131,265 +131,561 @@
 
           <q-carousel-slide name="q5" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q5.是第几次呢？ </label>
+              <div>
+                <label class="sv-title">Q5.是第几次呢？ </label>
+              </div>
+              <div><q-input v-model="q5_answer" :dense="true"/></div>
+              <div class="sub_but">
+                <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q6" class=" no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q6.请问您来华旅游的主要目的是? </label>
+            <div class="q-mt-md">
+              <div>
+                <label class="sv-title">Q6.请问您来华旅游的主要目的是？ </label>
+              </div>
+              <div class="sv-container">
+              <q-option-group
+                :options="q6_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanelExcept(q6_answer, '10')"
+                v-model="q6_answer"
+              />
+              <q-input outlined v-model="q6_answer_qita" v-if="q6_answer=='10'" />
+              <div class="sub_but">
+                <q-btn color="primary" v-if="q6_answer=='10'" label="下一题" @click="goToNextPanel()" />
+              </div>
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q7" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q7.请问您来中国主要接触了哪些景点、活动或风土人情？ 【选择最主要的1-3个】 </label>
+              <label class="sv-title">Q7.请问您来中国主要接触了哪些景点、活动或风土人情？ 【选择最主要的1-3个】？ </label>
+            </div>
+            <div>
+              <q-option-group dense
+                :options="q7_options"
+                label="Notifications"
+                type="checkbox"
+                v-model="q7_answer"
+              />
+              <q-input :dense="true" outlined v-model="q7_answer_qita" v-if="q7_answer.includes('12')" />
+              <div class="sub_but">
+                <q-btn color="primary" v-if="q7_answer.includes('12')" label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q8" class=" no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q8.您这次旅游是和谁一起出来玩的？ </label>
+            <div class="q-mt-md">
+              <label class="sv-title">Q8.您这次旅游是和谁一起出来玩的？ </label>
+              <div class="sv-container">
+              <q-option-group
+                :options="q8_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanelExcept(q8_answer, '7')"
+                v-model="q8_answer"
+              />
+              <q-input outlined v-model="q8_answer_qita" v-if="q8_answer=='7'" />
+              <div class="sub_but">
+                <q-btn color="primary" v-if="q8_answer=='7'" label="下一题" @click="goToNextPanel()" />
+              </div>
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q9" class=" no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q9.您这次出游前主要通过哪些渠道了解有关信息？【最多选三项】 </label>
+            <div class="q-mt-md">
+              <label class="sv-title">Q9.您这次出游前主要通过哪些渠道了解有关信息？【最多选三项】 </label>
+              <q-option-group dense
+                :options="q9_options"
+                label="Notifications"
+                type="checkbox"
+                v-model="q9_answer"
+              />
+              <q-input :dense="true" outlined v-model="q9_answer_qita" v-if="q9_answer.includes('12')" />
+              <div class="sub_but">
+                <q-btn color="primary" v-if="q9_answer.includes('12')" label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q10" class=" no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q10.您这次出游前主要查找了哪些方面的信息？【最多选三项】 </label>
+            <div class="q-mt-md">
+              <label class="sv-title">Q10.您这次出游前主要查找了哪些方面的信息？【最多选三项】 </label>
+              <q-option-group dense
+                :options="q10_options"
+                label="Notifications"
+                type="checkbox"
+                v-model="q10_answer"
+              />
+              <q-input :dense="true" outlined v-model="q10_answer_qita" v-if="q10_answer.includes('8')" />
+              <div class="sub_but">
+                <q-btn color="primary" v-if="q10_answer.includes('8')" label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q11" class=" no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q11.您这次出游前在电视上看到过中国的旅游形象广告或专题片吗？ </label>
+            <div class="q-mt-md">
+              <label class="sv-title">Q11.您这次出游前在电视上看到过中国的旅游形象广告或专题片吗？ </label>
+              <div>
+              <q-option-group
+                :options="q11_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q11_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q12" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q12.是哪个城市（景区）呢？ </label>
+              <label class="sv-title">Q12.是哪个城市（景区）呢？ </label>
+              <q-input outlined v-model="q12_answer_qita" />
+              <div class="sub_but">
+                <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q13" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q13.您选择一地作为目的地出行，下列因素哪些对您影响较大？【最多选三项】 </label>
+          <q-carousel-slide name="q13" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q13.您选择一地作为目的地出行，下列因素哪些对您影响较大？【最多选三项】 </label>
+              <q-option-group dense
+                :options="q13_options"
+                label="Notifications"
+                type="checkbox"
+                v-model="q13_answer"
+              />
+              <q-input :dense="true" outlined v-model="q13_answer_qita" v-if="q13_answer.includes('15')" />
+              <div class="sub_but">
+                <q-btn color="primary" v-if="q13_answer.includes('15')" label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q14" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q14.您这次旅游时人均花费是多少钱？ </label>
+          <q-carousel-slide name="q14" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q14.您这次旅游时人均花费是多少钱？ </label>
+              <div>
+              <q-option-group
+                :options="q14_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q14_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q15" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q15.您这次旅游花费最多的项目是？ </label>
+          <q-carousel-slide name="q15" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q15.您这次旅游花费最多的项目是？ </label>
+              <div class="sv-container">
+              <q-option-group
+                :options="q15_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanelExcept(q15_answer, '7')"
+                v-model="q15_answer"
+              />
+              <q-input outlined v-model="q15_answer_qita" v-if="q15_answer=='7'" />
+              <div class="sub_but">
+                <q-btn color="primary" v-if="q15_answer=='7'" label="下一题" @click="goToNextPanel()" />
+              </div>
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q16" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q16.您这次旅游时参观了几个景点？ </label>
+          <q-carousel-slide name="q16" class=" no-wrap flex-center">
+            <div class="q-mt-md ">
+              <label class="sv-title">Q16.您这次旅游时参观了几个景点？ </label>
+              <div>
+              <q-option-group
+                :options="q16_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q16_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q17" class="column no-wrap flex-center">
+          <q-carousel-slide name="q17" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q17. 您这次旅游途经了哪些国家（地区）？ </label>
+              <label class="sv-title">Q17. 您这次旅游途经了哪些国家（地区）？ </label>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q18" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q18. 您这次在华旅游线路包含了哪些城市（景区）？ </label>
+          <q-carousel-slide name="q18" class=" no-wrap flex-center">
+            <div class="q-mt-md ">
+              <label class="sv-title">Q18. 您这次在华旅游线路包含了哪些城市（景区）？ </label>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q19" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q19.您这次旅游了多长时间？ </label>
+          <q-carousel-slide name="q19" class=" no-wrap flex-center">
+            <div class="q-mt-md ">
+              <label class="sv-title">Q19.您这次旅游了多长时间？ </label>
+              <div>
+              <q-option-group
+                :options="q19_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q19_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q20" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q20.您这次旅游时住在什么地方？ </label>
+          <q-carousel-slide name="q20" class=" no-wrap flex-center">
+            <div class="q-mt-md ">
+              <label class="sv-title">Q20.您这次旅游时住在什么地方？ </label>
+              <div class="sv-container">
+              <q-option-group
+                :options="q20_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanelExcept(q20_answer, '5')"
+                v-model="q20_answer"
+              />
+              <q-input outlined v-model="q20_answer_qita" v-if="q20_answer=='5'" />
+              <div class="sub_but">
+                <q-btn color="primary" v-if="q38_answer=='10'" label="下一题" @click="goToNextPanel()" />
+              </div>
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q21" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q21.您这次旅游时购买了保险吗？ </label>
+          <q-carousel-slide name="q21" class=" no-wrap flex-center">
+            <div class="q-mt-md ">
+              <label class="sv-title">Q21.您这次旅游时购买了保险吗？ </label>
+              <div>
+              <q-option-group
+                :options="q21_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q21_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q22" class="column no-wrap flex-center">
+          <q-carousel-slide name="q22" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q22.您购买了以下哪几种保险？ </label>
+              <label class="sv-title">Q22.您购买了以下哪几种保险？ </label>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q23" class="column no-wrap flex-center">
+          <q-carousel-slide name="q23" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q23.在此次旅遊之前，您對以下城市的印象如何？（城市旅遊形象）？ </label>
+              <label class="sv-title">Q23.在此次旅遊之前，您對以下城市的印象如何？（城市旅遊形象）？ </label>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q24" class="column no-wrap flex-center">
+          <q-carousel-slide name="q24" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q24.来这里旅游前，您对目的地的整体形象评价如何？ </label>
+              <label class="sv-title">Q24.来这里旅游前，您对目的地的整体形象评价如何？ </label>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q25" class="column no-wrap flex-center">
+          <q-carousel-slide name="q25" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q25.在此次旅游之前，您对此次旅游的期望有多高？ </label>
+              <label class="sv-title">Q25.在此次旅游之前，您对此次旅游的期望有多高？ </label>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q26" class="column no-wrap flex-center">
+          <q-carousel-slide name="q26" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q26.您对此次出游的定位如何评价？ </label>
+              <label class="sv-title">Q26.您对此次出游的定位如何评价？ </label>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q27" class="column no-wrap flex-center">
+          <q-carousel-slide name="q27" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q27.您对当地的总体评价如何？ </label>
+              <label class="sv-title">Q27.您对当地的总体评价如何？ </label>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q28" class="column no-wrap flex-center">
+          <q-carousel-slide name="q28" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q28.您对城市管理的满意程度如何？ </label>
+              <label class="sv-title">Q28.您对城市管理的满意程度如何？ </label>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q29" class="column no-wrap flex-center">
+          <q-carousel-slide name="q29" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q29.您对公共行业服务的满意程度如何？ </label>
+              <label class="sv-title">Q29.您对公共行业服务的满意程度如何？ </label>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q30" class="column no-wrap flex-center">
+          <q-carousel-slide name="q30" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q30.您对当地窗口服务具体评价如何？ </label>
+              <label class="sv-title">Q30.您对当地窗口服务具体评价如何？ </label>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q31" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q31.您对此次出游的总体评价如何？ </label>
+          <q-carousel-slide name="q31" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q31.您对此次出游的总体评价如何？ </label>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q32" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q32.您旅途过程中有抱怨或投诉吗？ </label>
+          <q-carousel-slide name="q32" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q32.您旅途过程中有抱怨或投诉吗？ </label>
+              <div>
+              <q-option-group
+                :options="q32_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q32_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q33" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q33.投诉处理满意程度？ </label>
+          <q-carousel-slide name="q33" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q33.投诉处理满意程度？ </label>
+              <div>
+              <q-option-group
+                :options="q33_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q33_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q34" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q34.您对中国有再游一次的想法吗？ </label>
+          <q-carousel-slide name="q34" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q34.您对中国有再游一次的想法吗？ </label>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q35" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q35. 您对目的地在旅游建设与旅游服务方面主要意见和建议是什么？ </label>
+          <q-carousel-slide name="q35" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q35. 您对目的地在旅游建设与旅游服务方面主要意见和建议是什么？ </label>
+              <q-input outlined v-model="q35_answer_qita" />
+              <div class="sub_but">
+                <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q36" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q36.您在2020 or 2021年有旅行计划吗？ </label>
+          <q-carousel-slide name="q36" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q36.您在2020 or 2021年有旅行计划吗？ </label>
+              <div>
+              <q-option-group
+                :options="q36_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q36_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q37" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q37.准备去那些地方旅行呢？ </label>
+          <q-carousel-slide name="q37" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q37.准备去那些地方旅行呢？ </label>
+              <div>
+              <q-option-group
+                :options="q37_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q37_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q38" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q38.如果您现在或将来准备前往中国，那您会为了什么来到中国呢？ </label>
+          <q-carousel-slide name="q38" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q38.如果您现在或将来准备前往中国，那您会为了什么来到中国呢？ </label>
+              <div class="sv-container">
+              <q-option-group
+                :options="q38_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanelExcept(q38_answer, '10')"
+                v-model="q38_answer"
+              />
+              <q-input outlined v-model="q38_answer_qita" v-if="q38_answer=='10'" />
+              <div class="sub_but">
+                <q-btn color="primary" v-if="q38_answer=='10'" label="下一题" @click="goToNextPanel()" />
+              </div>
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q39" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q2. 请问您2019年是否到过中国旅游？ </label>
+          <q-carousel-slide name="q39" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q39.如果前往中国，您现在已经收集了至少一些中国的旅行情报吗？ </label>
+              <div class="sv-container">
+                <q-option-group
+                  :options="q39_options"
+                  label="Notifications"
+                  type="radio"
+                  @input="goToNextPanelExcept(q39_answer, '5')"
+                  v-model="q39_answer"
+                />
+                <q-input outlined v-model="q39_answer_qita" v-if="q39_answer=='5'" />
+                <div class="sub_but">
+                  <q-btn color="primary" v-if="q39_answer=='5'" label="下一题" @click="goToNextPanel()" />
+                </div>
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q40" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q2. 请问您2019年是否到过中国旅游？ </label>
+          <q-carousel-slide name="q40" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q40. 如果前往中国，您会选择什么季节前往中国呢？ </label>
+              <div>
+              <q-option-group
+                :options="q40_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q40_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q41" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q2. 请问您2019年是否到过中国旅游？ </label>
+          <q-carousel-slide name="q41" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q41. 您最近的一次出行是什么时候呢？任意目的地？ </label>
+              <div>
+              <q-option-group
+                :options="q41_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q41_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q42" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q2. 请问您2019年是否到过中国旅游？ </label>
+          <q-carousel-slide name="q42" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q42. 最近的COVID-19疫情影响了您的出行度假计划吗？ </label>
+              <div>
+              <q-option-group
+                :options="q42_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q42_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q43" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q2. 请问您2019年是否到过中国旅游？ </label>
+          <q-carousel-slide name="q43" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q43. 被访者性别？ </label>
+              <div class="sv-container">
+              <q-option-group
+                :options="q43_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q43_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q44" class="column no-wrap flex-center">
+          <q-carousel-slide name="q44" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
-              <label>Q2. 请问您2019年是否到过中国旅游？ </label>
+              <label class="sv-title">Q44. 被访者姓名？ </label>
+              <q-input outlined v-model="q44_answer_qita" />
+              <div class="sub_but">
+                <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q45" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q2. 请问您2019年是否到过中国旅游？ </label>
+          <q-carousel-slide name="q45" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q45. 请问您所接受的最高教育程度是？ </label>
+              <div class="sv-container">
+              <q-option-group
+                :options="q45_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q45_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q46" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q2. 请问您2019年是否到过中国旅游？ </label>
+          <q-carousel-slide name="q46" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q46. 请问您的年龄是？ </label>
+              <div class="sv-container">
+              <q-option-group
+                :options="q46_options"
+                label="Notifications"
+                type="radio"
+                @input="goToNextPanel"
+                v-model="q46_answer"
+              />
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q47" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q2. 请问您2019年是否到过中国旅游？ </label>
+          <q-carousel-slide name="q47" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q47. 请问您所在的行业是？ </label>
+              <div class="sv-container">
+                <q-option-group
+                  :options="q47_options"
+                  label="Notifications"
+                  type="radio"
+                  @input="goToNextPanelExcept(q47_answer, '24')"
+                  v-model="q47_answer"
+                />
+                <q-input outlined v-model="q47_answer_qita" v-if="q47_answer=='24'" />
+                <div class="sub_but">
+                  <q-btn color="primary" v-if="q47_answer=='24'" label="下一题" @click="goToNextPanel()" />
+                </div>
+              </div>
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q48" class="column no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q2. 请问您2019年是否到过中国旅游？ </label>
+          <q-carousel-slide name="q48" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <label class="sv-title">Q48. 您个人愿意花多少钱在一次旅行上？ </label>
+              <div>
+                <q-option-group
+                  :options="q48_options"
+                  label="Notifications"
+                  type="radio"
+                  v-model="q48_answer"
+                />
+              </div>
             </div>
           </q-carousel-slide>
         </q-carousel>
@@ -408,13 +704,302 @@ export default {
       q2_answer: '',
       q3_answer: '',
       q4_answer: '',
+      q5_answer: '',
+      q6_answer: '',
+      q7_answer: [],
+      q8_answer: '',
+      q9_answer: [],
+      q13_answer: [],
+      q7_answer_qita: '',
+      q9_answer_qita: '',
+      q19_answer_qita: '',
+      q8_answer_qita: '',
+      q10_answer: [],
       q3_answer_qita: '',
+      q13_answer_qita: '',
+      q12_answer_qita: '',
+      q6_answer_qita: '',
+      q39_answer_qita: '',
+      q10_answer_qita: '',
+      q47_answer_qita: '',
+      q44_answer_qita: '',
+      q35_answer_qita: '',
+      q38_answer_qita: '',
+      q15_answer_qita: '',
+      q20_answer_qita: '',
+      q48_answer: '',
+      q7_options: [
+        { label: '1.山水风光', value: '1' },
+        { label: '2.文物古迹', value: '2' },
+        { label: '3.文化艺术', value: '3' },
+        { label: '4.美食烹调', value: '4' },
+        { label: '5.医疗保健', value: '5' },
+        { label: '6.购物消费', value: '6' },
+        { label: '7.气候生态', value: '7' },
+        { label: '8.建筑设施', value: '8' },
+        { label: '9.节庆会展', value: '9' },
+        { label: '10.学习培训', value: '10' },
+        { label: '11.乡村度假', value: '11' },
+        { label: '12.其他（请注明）', value: '12' }],
+      q8_options: [
+        { label: '1.和家人一起出游', value: '1' },
+        { label: '2.公司、班级、社团等集体出游', value: '2' },
+        { label: '3.和好友结伴出游', value: '3' },
+        { label: '4.网络结伴旅游', value: '4' },
+        { label: '5.自助游组织出游', value: '5' },
+        { label: '6.商务活动/会议培训旅游', value: '6' },
+        { label: '7.其他（请注明）', value: '7' }
+      ],
+      q6_options: [
+        { label: '1.了解中国特色文化', value: '1' },
+        { label: '2.游览/观光', value: '2' },
+        { label: '3.休闲/度假', value: '3' },
+        { label: '4.探亲访友', value: '4' },
+        { label: '5.商务', value: '5' },
+        { label: '6.会议', value: '6' },
+        { label: '7.文体/教育/科技交流', value: '7' },
+        { label: '8.宗教/朝拜', value: '8' },
+        { label: '9.健康医疗', value: '9' },
+        { label: '10.其他（请注明）', value: '10' }
+      ],
+      q9_options: [
+        { label: '1.社交媒体', value: '1' },
+        { label: '2.报纸/杂志/书籍', value: '2' },
+        { label: '3.亲朋好友介绍', value: '3' },
+        { label: '4.电视/广播', value: '4' },
+        { label: '5.户外广告', value: '5' },
+        { label: '6.电梯广告', value: '6' },
+        { label: '7.机场/地铁广告', value: '7' },
+        { label: '8.旅游宣传册', value: '8' },
+        { label: '9.旅游会展', value: '9' },
+        { label: '10.到旅行社咨询', value: '10' },
+        { label: '11.旅游地自己的推广活动', value: '11' },
+        { label: '12.其他（请注明）', value: '12' }
+      ],
+      q13_options: [
+        { label: '1.旅行费用', value: '1' },
+        { label: '2.距离', value: '2' },
+        { label: '3.旅游地交通', value: '3' },
+        { label: '4.住宿条件', value: '4' },
+        { label: '5.旅行安全', value: '5' },
+        { label: '6.信息获取', value: '6' },
+        { label: '7.沟通交流', value: '7' },
+        { label: '8.景点吸引力/旅游地吸引力', value: '8' },
+        { label: '9.特色饮食', value: '9' },
+        { label: '10.休闲的环境', value: '10' },
+        { label: '11.城市形象', value: '11' },
+        { label: '12.节事活动）', value: '12' },
+        { label: '13.民风民俗', value: '13' },
+        { label: '14.居民友善好客', value: '14' },
+        { label: '15.其他（请注明）', value: '15' }
+      ],
+      q10_options: [
+        { label: '1.当地政策和法规', value: '1' },
+        { label: '2.旅游景区接待情况', value: '2' },
+        { label: '3.旅游产品和服务介绍', value: '3' },
+        { label: '4.旅游交通/天气等生活信息', value: '4' },
+        { label: '5.旅游购物环境情况', value: '5' },
+        { label: '6.特色文化娱乐活动', value: '6' },
+        { label: '7.旅游价格', value: '7' },
+        { label: '8.其他（请注明）', value: '8' }
+      ],
+
+      q45_answer: '',
+      q45_options: [
+        { label: '1.小学及以下', value: '1' },
+        { label: '2.初中', value: '2' },
+        { label: '3.高中/中专/技校', value: '3' },
+        { label: '4.大学专科', value: '4' },
+        { label: '5.大学本科', value: '5' },
+        { label: '6.硕士及以上', value: '6' }
+      ],
+      q46_answer: '',
+      q46_options: [
+        { label: '1.15岁以下', value: '1' },
+        { label: '2.15-24岁', value: '2' },
+        { label: '3.25-34', value: '3' },
+        { label: '4.35-44', value: '4' },
+        { label: '5.45-59', value: '5' },
+        { label: '6.60岁及以上', value: '6' }
+      ],
+      q47_answer: '',
+      q47_options: [
+        { label: '1.农林牧', value: '1' },
+        { label: '2.科学研究、技术服务和地质勘查业 ', value: '2' },
+        { label: '3.采矿业', value: '3' },
+        { label: '4.水利、环境和公共设施管理业', value: '4' },
+        { label: '5.制造业', value: '5' },
+        { label: '6.居民服务和其他服务业', value: '6' },
+        { label: '7.教育', value: '7' },
+        { label: '8.电力、燃气及水的生产和供应', value: '8' },
+        { label: '9.建筑业 ', value: '9' },
+        { label: '10.卫生、社会保障和社会福利业', value: '10' },
+        { label: '11.文化体育和娱乐业', value: '11' },
+        { label: '12.交通运输、仓储和邮政业', value: '12' },
+        { label: '13.国际组织', value: '13' },
+        { label: '14.信息传输、计算机服务和软件业', value: '14' },
+        { label: '15.公共管理与社会组织', value: '15' },
+        { label: '16.批发和零售业', value: '16' },
+        { label: '17.金融业', value: '17' },
+        { label: '18.住宿和餐饮业', value: '18' },
+        { label: '19.租赁和商务服务业', value: '19' },
+        { label: '20.下岗失业人员', value: '20' },
+        { label: '21.房地产业', value: '21' },
+        { label: '22.学生', value: '22' },
+        { label: '23.退休人员', value: '23' },
+        { label: '24.其它（请注明）', value: '24' }
+      ],
+      q48_options: [
+        { label: '1.1000美元以下 ', value: '1' },
+        { label: '2.1001-3000美元', value: '2' },
+        { label: '3.3001-5000美元', value: '3' },
+        { label: '4.5001-8000美元', value: '4' },
+        { label: '5.8001-10000美元', value: '5' },
+        { label: '6.10001-20000美元', value: '6' },
+        { label: '7.20000美元以上', value: '7' }
+      ],
+      q21_answer: '',
+      q21_options: [
+        { label: '1.购买了保险', value: '1' },
+        { label: '2.没有购买保险', value: '2' }
+      ],
+      q20_answer: '',
+      q20_options: [
+        { label: '1.豪华酒店（四星级及以上）', value: '1' },
+        { label: '2.中等价位酒店（二星、三星酒店）', value: '2' },
+        { label: '3.经济型酒店', value: '3' },
+        { label: '4.社会旅馆/青旅', value: '4' },
+        { label: '5.其他（请注明）', value: '5' }
+      ],
+      q15_answer: '',
+      q15_options: [
+        { label: '1.景点门票', value: '1' },
+        { label: '2.交通', value: '2' },
+        { label: '3.餐饮', value: '3' },
+        { label: '4.购物', value: '4' },
+        { label: '5.文化娱乐', value: '5' },
+        { label: '6.住宿', value: '6' },
+        { label: '7.其他（请注明）', value: '7' }
+      ],
+      q16_answer: '',
+      q16_options: [
+        { label: '1.0个', value: '1' },
+        { label: '2.1-2个', value: '2' },
+        { label: '3.3-5个', value: '3' },
+        { label: '4.6-9个', value: '4' },
+        { label: '5.10个及以上', value: '5' }
+      ],
+      q11_answer: '',
+      q11_options: [
+        { label: '1.否', value: '1' },
+        { label: '2.是', value: '2' }
+      ],
+      q14_answer: '',
+      q14_options: [
+        { label: '1.500美元以下', value: '1' },
+        { label: '2.501-1000美元', value: '2' },
+        { label: '3.1001-2000美元', value: '3' },
+        { label: '4.2001-3000美元', value: '4' },
+        { label: '5.3001-5000美元', value: '5' },
+        { label: '6.5001-10000美元', value: '6' },
+        { label: '7.10000美元以上', value: '7' }
+      ],
+      q19_answer: '',
+      q19_options: [
+        { label: '1.当天往返', value: '1' },
+        { label: '2.2—3日以内', value: '2' },
+        { label: '3.4-7天', value: '3' },
+        { label: '4.8-15天', value: '4' },
+        { label: '5.一个月以内', value: '5' },
+        { label: '6.一个月以上', value: '6' }
+      ],
+      q36_answer: '',
+      q36_options: [
+        { label: '1.是，已经预定/出行了', value: '1' },
+        { label: '2.是，正在等待打折才预定', value: '2' },
+        { label: '3.是，还没有决定', value: '3' },
+        { label: '4.否，明年及以后才准备出行', value: '4' }
+      ],
+      q32_answer: '',
+      q32_options: [
+        { label: '1.有', value: '1' },
+        { label: '2.没有', value: '2' }
+      ],
+      q33_answer: '',
+      q33_options: [
+        { label: '1.很好', value: '1' },
+        { label: '2.还行', value: '2' },
+        { label: '3.糟糕', value: '3' },
+        { label: '4.非常糟糕', value: '4' }
+      ],
+      q37_answer: '',
+      q37_options: [
+        { label: '1.自己的国家', value: '1' },
+        { label: '2.中国', value: '2' },
+        { label: '3.其他国家', value: '3' },
+        { label: '4.不知道', value: '4' }
+      ],
+      q38_answer: '',
+      q38_options: [
+        { label: '1.了解中国特色文化', value: '1' },
+        { label: '2.游览/观光', value: '2' },
+        { label: '3.休闲/度假', value: '3' },
+        { label: '4.探亲访友', value: '4' },
+        { label: '5.商务', value: '5' },
+        { label: '6.会议', value: '6' },
+        { label: '7.文体/教育/科技交流', value: '7' },
+        { label: '8.宗教/朝拜', value: '8' },
+        { label: '9.健康医疗', value: '9' },
+        { label: '10.其他', value: '10' }
+      ],
+      q39_answer: '',
+      q39_options: [
+        { label: '1.是的', value: '1' },
+        { label: '2.不是，我会在确定出行后开始收集', value: '2' },
+        { label: '3.不是，我从不提前看情报', value: '3' },
+        { label: '4.不是，我现在没有前往中国的计划', value: '4' },
+        { label: '5.其他', value: '5' }
+      ],
+      q40_answer: '',
+      q40_options: [
+        { label: '1.春', value: '1' },
+        { label: '2.', value: '2' },
+        { label: '3.秋', value: '3' },
+        { label: '4.冬', value: '4' }
+      ],
+      q41_answer: '',
+      q41_options: [
+        { label: '1.秋 2020', value: '1' },
+        { label: '2.冬 2021', value: '2' },
+        { label: '3.春 2021', value: '3' },
+        { label: '4.夏 2021', value: '4' },
+        { label: '5.秋 2021', value: '5' }
+      ],
+      q42_answer: '',
+      q42_options: [
+        { label: '1.很大影响', value: '1' },
+        { label: '2.有影响', value: '2' },
+        { label: '3.影响很少', value: '3' },
+        { label: '4.完全没有影响', value: '4' }
+      ],
+      q43_answer: '',
+      q43_options: [
+        { label: '1.男', value: '1' },
+        { label: '2.女', value: '2' }
+      ],
       lorem: 'I love you'
     }
   },
   methods: {
     goToNextPanel () {
       this.$refs.carousel.next()
+    },
+    goToNextPanelExcept (val, biaozhun) {
+      if (val === biaozhun) {
+
+      } else {
+        this.goToNextPanel()
+      }
     },
     checkAndGo (val) {
       this.$refs.carousel.next()
@@ -432,7 +1017,11 @@ export default {
   float:right;
   position:absolute;
   bottom:0;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
   margin-left: 145px;
+}
+
+.sv-container{
+  margin-bottom: 180px;
 }
 </style>
