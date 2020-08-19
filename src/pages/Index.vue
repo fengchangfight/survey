@@ -3,6 +3,7 @@
     <div class="q-pa-md" >
       <div class="q-gutter-md" style="min-width: 500px;max-width: 500px" >
         <q-carousel
+          ref="carousel"
           v-model="slide"
           transition-prev="scale"
           transition-next="scale"
@@ -16,19 +17,24 @@
           class="bg-grey-12 text-black shadow-1 rounded-borders"
         >
           <q-carousel-slide name="q1" class="flex-center">
-            <div class="q-mt-md text-center" >
-              <label>Q1. 请问您来自哪个国家或地区？</label>
-              <q-input v-model="q1" :dense="true"/>
+            <div class="q-mt-md text-center"  >
+              <div><label class="sv-title">Q1. 请问您来自哪个国家或地区？</label></div>
+              <div><q-input v-model="q1_answer" :dense="true"/></div>
+              <div class="sub_but">
+                <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q2" class="no-wrap flex-center">
-            <div class="q-mt-md text-center" >
-              <div style="margin: 0 auto;"><label>Q2. 请问您2019年是否到过中国旅游？ </label></div>
-              <div style="margin: 0 auto;max-width:200px;" >
+            <div class="q-mt-md" >
+              <div style="margin: 0 auto;">
+                <label class="sv-title">Q2. 请问您2019年是否到过中国旅游？ </label>
+              </div>
+              <div style="max-width:200px;" >
                 <q-item tag="label" v-ripple>
                   <q-item-section avatar>
-                    <q-radio v-model="q2" val=1 color="teal" />
+                    <q-radio @input="checkAndGo" v-model="q2_answer" val=1 color="teal" />
                   </q-item-section>
                   <q-item-section>
                     <q-item-label>1. 是</q-item-label>
@@ -37,7 +43,7 @@
 
                 <q-item tag="label" v-ripple>
                   <q-item-section avatar>
-                    <q-radio v-model="q2" val=2 color="teal" />
+                    <q-radio @input="checkAndGo" v-model="q2_answer" val=2 color="teal" />
                   </q-item-section>
                   <q-item-section>
                     <q-item-label>2. 否</q-item-label>
@@ -48,13 +54,78 @@
           </q-carousel-slide>
 
           <q-carousel-slide name="q3" class=" no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q3. 请问您这次是参加旅行团还是自己旅游？ </label>
+            <div class="q-mt-md ">
+              <label class="sv-title">Q3. 请问您这次是参加旅行团还是自己旅游？ </label>
+              <div style="max-width:300px;" >
+                <q-item tag="label" v-ripple>
+                  <q-item-section avatar>
+                    <q-radio @input="checkAndGo" v-model="q3_answer" val=1 />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>1. 参加旅行社的出游团</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item tag="label" v-ripple>
+                  <q-item-section avatar>
+                    <q-radio @input="checkAndGo" v-model="q3_answer" val=2 />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>2. 自己组织</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item tag="label" v-ripple>
+                  <q-item-section avatar>
+                    <q-radio @input="checkAndGo" v-model="q3_answer" val=3 />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>3. 公务</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item tag="label" v-ripple>
+                  <q-item-section avatar>
+                    <q-radio v-model="q3_answer" val=4 />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>4. 其他</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </div>
+              <div style="margin: 0 auto; max-width: 220px;">
+                <q-input outlined v-model="q3_answer_qita" v-if="q3_answer=='4'" />
+              </div>
+              <div class="sub_but">
+                <q-btn color="primary" label="下一题" v-if="q3_answer=='4'" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
+
           <q-carousel-slide name="q4" class=" no-wrap flex-center">
-            <div class="q-mt-md text-center">
-              <label>Q4.您是第一次到中国来旅游吗？ </label>
+            <div class="q-mt-md">
+              <div>
+                <label class="sv-title">Q4. 您是第一次到中国来旅游吗？ </label>
+              </div>
+              <div style="max-width:400px;" >
+                <q-item tag="label" v-ripple>
+                  <q-item-section avatar>
+                    <q-radio @input="checkAndGo" v-model="q4_answer" val=1 />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>1. 是</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item tag="label" v-ripple>
+                  <q-item-section avatar>
+                    <q-radio @input="checkAndGo" v-model="q4_answer" val=2 />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>2. 否</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </div>
             </div>
           </q-carousel-slide>
 
@@ -333,10 +404,35 @@ export default {
   data () {
     return {
       slide: 'q1',
-      q1: '',
-      q2: '',
+      q1_answer: '',
+      q2_answer: '',
+      q3_answer: '',
+      q4_answer: '',
+      q3_answer_qita: '',
       lorem: 'I love you'
+    }
+  },
+  methods: {
+    goToNextPanel () {
+      this.$refs.carousel.next()
+    },
+    checkAndGo (val) {
+      this.$refs.carousel.next()
     }
   }
 }
 </script>
+
+<style scoped>
+.sv-title{
+  font-size: 150%;
+}
+
+.sub_but{
+  float:right;
+  position:absolute;
+  bottom:0;
+  margin-bottom: 100px;
+  margin-left: 145px;
+}
+</style>
