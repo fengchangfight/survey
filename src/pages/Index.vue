@@ -2,6 +2,21 @@
   <q-page class="flex flex-center" >
     <div class="q-pa-md" >
       <div class="q-gutter-md" style="min-width: 500px;max-width: 500px" >
+        <q-dialog v-model="alert">
+          <q-card>
+            <q-card-section>
+              <div class="text-h6">提醒</div>
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">
+              请至少填写一项
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn flat label="OK" color="primary" v-close-popup />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
         <q-carousel
           ref="carousel"
           v-model="slide"
@@ -43,7 +58,7 @@
 
                 <q-item tag="label" v-ripple>
                   <q-item-section avatar>
-                    <q-radio @input="checkAndGo" v-model="q2_answer" val=2 color="teal" />
+                    <q-radio @input="checkAndGoSpecific('q36')" v-model="q2_answer" val=2 color="teal" />
                   </q-item-section>
                   <q-item-section>
                     <q-item-label>2. 否</q-item-label>
@@ -110,7 +125,7 @@
               <div style="max-width:400px;" >
                 <q-item tag="label" v-ripple>
                   <q-item-section avatar>
-                    <q-radio @input="checkAndGo" v-model="q4_answer" val=1 />
+                    <q-radio @input="checkAndGoSpecific('q6')" v-model="q4_answer" val=1 />
                   </q-item-section>
                   <q-item-section>
                     <q-item-label>1. 是</q-item-label>
@@ -119,7 +134,7 @@
 
                 <q-item tag="label" v-ripple>
                   <q-item-section avatar>
-                    <q-radio @input="checkAndGo" v-model="q4_answer" val=2 />
+                    <q-radio @input="checkAndGo()" v-model="q4_answer" val=2 />
                   </q-item-section>
                   <q-item-section>
                     <q-item-label>2. 否</q-item-label>
@@ -129,7 +144,7 @@
             </div>
           </q-carousel-slide>
 
-          <q-carousel-slide name="q5" class=" no-wrap flex-center">
+          <q-carousel-slide v-if="!hide5" name="q5" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
               <div>
                 <label class="sv-title">Q5.是第几次呢？ </label>
@@ -241,7 +256,7 @@
                 :options="q11_options"
                 label="Notifications"
                 type="radio"
-                @input="goToNextPanel"
+                @input="goToNextPanelOnCondition(q11_answer==='2', 'q13')"
                 v-model="q11_answer"
               />
               </div>
@@ -332,7 +347,7 @@
               <q-input filled v-model="q17_answer_4" label="4th" />
               <q-input outlined v-model="q17_answer_5" label="5th" />
               <div class="sub_but">
-                <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
+                <q-btn color="primary" label="下一题" @click="validateNoneNullAndGoToNextPanel(q17_answer_1+q17_answer_2+q17_answer_3+q17_answer_4+q17_answer_5)" />
               </div>
             </div>
           </q-carousel-slide>
@@ -351,7 +366,7 @@
               <q-input dense outlined v-model="q18_answer_9" label="9th" />
               <q-input dense filled v-model="q18_answer_10" label="10th" />
               <div class="sub_but">
-                <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
+                <q-btn color="primary" label="下一题" @click="validateNoneNullAndGoToNextPanel(q18_answer_1+q18_answer_2+q18_answer_3+q18_answer_4+q18_answer_5+q18_answer_6+q18_answer_7+q18_answer_8+q18_answer_9+q18_answer_10)" />
               </div>
             </div>
           </q-carousel-slide>
@@ -398,7 +413,7 @@
                 :options="q21_options"
                 label="Notifications"
                 type="radio"
-                @input="goToNextPanel"
+                @input="goToNextPanelOnCondition(q21_answer==='1', 'q23')"
                 v-model="q21_answer"
               />
               </div>
@@ -1196,7 +1211,7 @@
                 :options="q32_options"
                 label="Notifications"
                 type="radio"
-                @input="goToNextPanel"
+                @input="goToNextPanelOnCondition(q32_answer==='1', 'q34')"
                 v-model="q32_answer"
               />
               </div>
@@ -1629,6 +1644,9 @@ export default {
       q18_answer_3: '',
       q18_answer_4: '',
       q18_answer_5: '',
+      q31_answer_lixiang: '',
+      q31_answer_xiangbi: '',
+      q31_answer_zongti: '',
       q18_answer_6: '',
       q18_answer_7: '',
       q18_answer_8: '',
@@ -1859,6 +1877,7 @@ export default {
       q30_answer_biaozhunhua: '',
       q30_answer_gonggongfuwu: '',
       q30_answer_fapiao: '',
+      hide5: false,
       q30_answer_chanpinfuwuzhiliang: '',
       q30_answer_daoyou: '',
       q30_answer_lvxingshe: '',
@@ -1871,15 +1890,33 @@ export default {
       q30_answer_zhusu: '',
       q30_answer_canyin: '',
       q30_answer_jiaotong: '',
-      lorem: 'I love you'
+      lorem: 'I love you',
+      alert: false
     }
   },
   methods: {
+    validateNoneNullAndGoToNextPanel (val) {
+      if (val.trim() !== null && val.trim() !== '') {
+        this.checkAndGo()
+      } else {
+        this.alert = true
+      }
+    },
+    hide5_m (val) {
+      this.hide5 = val
+    },
     goToPanel (panel) {
       this.slide = panel
     },
     submit () {
       alert('finished')
+    },
+    goToNextPanelOnCondition (normal, destination) {
+      if (normal) {
+        this.$refs.carousel.next()
+      } else {
+        this.checkAndGoSpecific(destination)
+      }
     },
     goToNextPanel () {
       this.$refs.carousel.next()
@@ -1891,8 +1928,12 @@ export default {
         this.goToNextPanel()
       }
     },
-    checkAndGo (val) {
+    checkAndGo () {
+      console.log('executed check and')
       this.$refs.carousel.next()
+    },
+    checkAndGoSpecific (val) {
+      this.slide = val
     }
   }
 }
