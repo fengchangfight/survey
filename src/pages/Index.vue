@@ -25,9 +25,7 @@
           swipeable
           animated
           control-color="blue"
-          navigation
           padding
-          arrows
           height="600px"
           class="bg-grey-12 text-black shadow-1 rounded-borders"
         >
@@ -1502,7 +1500,7 @@
                 <q-input outlined v-model="email" label="您的邮箱"  />
               </div>
               <div class="sub_but">
-                <q-btn color="primary" label="下一页" @click="goToNextPanel()" />
+                <q-btn color="primary" label="下一页" @click="validateNoneNullAndGoToNextPanel(email)" />
               </div>
             </div>
           </q-carousel-slide>
@@ -1949,7 +1947,7 @@ export default {
   position:absolute;
   bottom:0;
   margin-bottom: 50px;
-  margin-left: 145px;
+  margin-left: 175px;
 }
 
 .sv-container{
