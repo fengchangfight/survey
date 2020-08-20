@@ -2263,7 +2263,7 @@ export default {
 
       axios.post('/***', this.things2submit).then(response => {
         console.log('normal')
-        this.alertSuccess = true;
+        this.alertSuccess = true
       }).catch(e => {
         alert('提交到后台异常')
         console.log('bad')
