@@ -1522,6 +1522,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'PageIndex',
   data () {
@@ -2243,6 +2244,14 @@ export default {
       this.things2submit.q46 = this.q46_answer_dict[this.q46_answer]
       this.things2submit.q47 = this.q47_answer_dict[this.q47_answer] == null ? this.q47_answer_qita : this.q47_answer_dict[this.q47_answer]
       this.things2submit.q48 = this.q48_answer_dict[this.q48_answer]
+
+      axios.get('/api/v1/user', {
+        test: 'test'
+      }).then(response => {
+        console.log('normal')
+      }).catch(e => {
+        console.log('bad')
+      })
 
       console.log(this.things2submit)
     },
