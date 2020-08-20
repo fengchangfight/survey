@@ -19,7 +19,7 @@
           <q-carousel-slide name="q1" class="flex-center">
             <div class="q-mt-md text-center"  >
               <div><label class="sv-title">Q1. 请问您来自哪个国家或地区？</label></div>
-              <div><q-input v-model="q1_answer" :dense="true"/></div>
+              <q-input outlined v-model="q1_answer"  />
               <div class="sub_but">
                 <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
               </div>
@@ -134,7 +134,9 @@
               <div>
                 <label class="sv-title">Q5.是第几次呢？ </label>
               </div>
-              <div><q-input v-model="q5_answer" :dense="true"/></div>
+              <div>
+                <q-input outlined v-model="q5_answer" />
+              </div>
               <div class="sub_but">
                 <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
               </div>
@@ -175,7 +177,7 @@
               />
               <q-input :dense="true" outlined v-model="q7_answer_qita" v-if="q7_answer.includes('12')" />
               <div class="sub_but">
-                <q-btn color="primary" v-if="q7_answer.includes('12')" label="下一题" @click="goToNextPanel()" />
+                <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
               </div>
             </div>
           </q-carousel-slide>
@@ -210,7 +212,7 @@
               />
               <q-input :dense="true" outlined v-model="q9_answer_qita" v-if="q9_answer.includes('12')" />
               <div class="sub_but">
-                <q-btn color="primary" v-if="q9_answer.includes('12')" label="下一题" @click="goToNextPanel()" />
+                <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
               </div>
             </div>
           </q-carousel-slide>
@@ -226,7 +228,7 @@
               />
               <q-input :dense="true" outlined v-model="q10_answer_qita" v-if="q10_answer.includes('8')" />
               <div class="sub_but">
-                <q-btn color="primary" v-if="q10_answer.includes('8')" label="下一题" @click="goToNextPanel()" />
+                <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
               </div>
             </div>
           </q-carousel-slide>
@@ -267,7 +269,7 @@
               />
               <q-input :dense="true" outlined v-model="q13_answer_qita" v-if="q13_answer.includes('15')" />
               <div class="sub_but">
-                <q-btn color="primary" v-if="q13_answer.includes('15')" label="下一题" @click="goToNextPanel()" />
+                <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
               </div>
             </div>
           </q-carousel-slide>
@@ -324,12 +326,33 @@
           <q-carousel-slide name="q17" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
               <label class="sv-title">Q17. 您这次旅游途经了哪些国家（地区）？ </label>
+              <q-input outlined v-model="q17_answer_1" label="1st" />
+              <q-input filled v-model="q17_answer_2" label="2nd" />
+              <q-input outlined v-model="q17_answer_3" label="3rd" />
+              <q-input filled v-model="q17_answer_4" label="4th" />
+              <q-input outlined v-model="q17_answer_5" label="5th" />
+              <div class="sub_but">
+                <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q18" class=" no-wrap flex-center">
             <div class="q-mt-md ">
               <label class="sv-title">Q18. 您这次在华旅游线路包含了哪些城市（景区）？ </label>
+              <q-input dense outlined v-model="q18_answer_1" label="1st" />
+              <q-input dense filled v-model="q18_answer_2" label="2nd" />
+              <q-input dense outlined v-model="q18_answer_3" label="3rd" />
+              <q-input dense filled v-model="q18_answer_4" label="4th" />
+              <q-input dense outlined v-model="q18_answer_5" label="5th" />
+              <q-input dense filled v-model="q18_answer_6" label="6th" />
+              <q-input dense outlined v-model="q18_answer_7" label="7th" />
+              <q-input dense filled v-model="q18_answer_8" label="8th" />
+              <q-input dense outlined v-model="q18_answer_9" label="9th" />
+              <q-input dense filled v-model="q18_answer_10" label="10th" />
+              <div class="sub_but">
+                <q-btn color="primary" label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
@@ -361,7 +384,7 @@
               />
               <q-input outlined v-model="q20_answer_qita" v-if="q20_answer=='5'" />
               <div class="sub_but">
-                <q-btn color="primary" v-if="q38_answer=='10'" label="下一题" @click="goToNextPanel()" />
+                <q-btn color="primary" v-if="q20_answer=='5'" label="下一题" @click="goToNextPanel()" />
               </div>
               </div>
             </div>
@@ -383,62 +406,785 @@
           </q-carousel-slide>
 
           <q-carousel-slide name="q22" class=" no-wrap flex-center">
-            <div class="q-mt-md text-center">
+            <div class="q-mt-md ">
               <label class="sv-title">Q22.您购买了以下哪几种保险？ </label>
+              <div>
+                <q-option-group dense
+                  :options="q22_options"
+                  label="Notifications"
+                  type="checkbox"
+                  v-model="q22_answer"
+                />
+                <q-input :dense="true" outlined v-model="q22_answer_qita" v-if="q22_answer.includes('7')" />
+                <div class="sub_but">
+                  <q-btn color="primary"  label="下一题" @click="goToNextPanel()" />
+                </div>
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q23" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
               <label class="sv-title">Q23.在此次旅遊之前，您對以下城市的印象如何？（城市旅遊形象）？ </label>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  北京:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_beijing"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  上海:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_shanghai"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  重庆:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_chongqing"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  沈阳:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_shenyang"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  西安:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_xian"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  广州:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_guangzhou"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  天津:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_tianjin"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  苏州:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_suzhou"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  南京:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_nanjing"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  成都:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_chengdu"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  杭州:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_hangzhou"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  承德:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_chengde"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  昆明:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_kunming"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  桂林:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_guilin"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  深圳:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_shenzhen"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  珠海:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_zhuhai"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  西宁:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_xining"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  兰州:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q23_answer_lanzhou"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div style="height: 20px; margin-top: 55px;margin-bottom: 25px;"></div>
+
+              <div class="sub_but">
+                <q-btn color="primary"  label="下一题" @click="goToNextPanel()" />
+              </div>
+
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q24" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
               <label class="sv-title">Q24.来这里旅游前，您对目的地的整体形象评价如何？ </label>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  城市形象:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q24_answer_chengshixingxiang"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  城市服务水平:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q24_answer_chengshifuwushuip"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="sub_but">
+                <q-btn color="primary"  label="下一题" @click="goToNextPanel()" />
+              </div>
+
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q25" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
               <label class="sv-title">Q25.在此次旅游之前，您对此次旅游的期望有多高？ </label>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  城市服务质量预期:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q25_answer_chengshifuwuzhiliangyuqi"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  旅游服务质量预期:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q25_answer_lvyoufuwuzhiliangyuqi"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="sub_but">
+                <q-btn color="primary"  label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q26" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
               <label class="sv-title">Q26.您对此次出游的定位如何评价？ </label>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  旅游价格是否合理:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q26_answer_lvyouzhiliangshifouheli"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  旅游质量是否与旅游价格相符:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q26_answer_jiagexiangfu"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="sub_but">
+                <q-btn color="primary"  label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q27" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
               <label class="sv-title">Q27.您对当地的总体评价如何？ </label>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  现代化程度:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q27_answer_xiandaihua"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  美丽程度:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q27_answer_meili"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  知名度:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q27_answer_zhimingdu"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  开放度:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q27_answer_kaifangdu"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  信息化程度（智慧城市):（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q27_answer_xinxihua"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="sub_but">
+                <q-btn color="primary"  label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q28" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
               <label class="sv-title">Q28.您对城市管理的满意程度如何？ </label>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  我感觉很差~很不错:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q28_answer"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="sub_but">
+                <q-btn color="primary"  label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q29" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
               <label class="sv-title">Q29.您对公共行业服务的满意程度如何？ </label>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  我感觉很差~很不错:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q29_answer"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="sub_but">
+                <q-btn color="primary"  label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q30" class=" no-wrap flex-center">
             <div class="q-mt-md text-center">
               <label class="sv-title">Q30.您对当地窗口服务具体评价如何？ </label>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  交通:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q30_answer_jiaotong"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  餐饮:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q30_answer_canyin"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  住宿:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q30_answer_zhusu"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  购物:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q30_answer_gouwu"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  文化娱乐:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q30_answer_wenhua"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  景区景点:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q30_answer_jingdian"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  旅行社:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q30_answer_lvxingshe"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  导游:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q30_answer_daoyou"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  产品和服务质量:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q30_answer_chanpinfuwuzhiliang"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  发票具备及正规度:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q30_answer_fapiao"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  旅游公共服务:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q30_answer_gonggongfuwu"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  标准化程度:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q30_answer_biaozhunhua"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  总体服务质量:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q30_answer_zongti"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+
+              <div style="height: 20px; margin-top: 55px;margin-bottom: 25px;"></div>
+
+              <div class="sub_but">
+                <q-btn color="primary"  label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
           <q-carousel-slide name="q31" class=" no-wrap flex-center">
             <div class="q-mt-md">
               <label class="sv-title">Q31.您对此次出游的总体评价如何？ </label>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  总体满意程度:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q31_answer_zongti"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  与需求相比满意程度:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q31_answer_xiangbi"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  与理想中相比的满意程度:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q31_answer_lixiang"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="sub_but">
+                <q-btn color="primary"  label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
@@ -475,6 +1221,51 @@
           <q-carousel-slide name="q34" class=" no-wrap flex-center">
             <div class="q-mt-md">
               <label class="sv-title">Q34.您对中国有再游一次的想法吗？ </label>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  未来自己重游:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q34_answer_zijichongyou"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  未来继续选择该旅行社的可能性:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q34_answer_jixu"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="q-pa-md">
+                <q-badge color="secondary">
+                  未来推荐亲友:（1~10分）
+                </q-badge>
+                <q-slider
+                  v-model="q34_answer_tuijian"
+                  :min="1"
+                  :max="10"
+                  :step="1"
+                  markers
+                  label
+                  color="purple"
+                />
+              </div>
+              <div class="sub_but">
+                <q-btn color="primary"  label="下一题" @click="goToNextPanel()" />
+              </div>
             </div>
           </q-carousel-slide>
 
@@ -682,10 +1473,29 @@
                 <q-option-group
                   :options="q48_options"
                   label="Notifications"
+                  @input="goToNextPanel"
                   type="radio"
                   v-model="q48_answer"
                 />
               </div>
+            </div>
+          </q-carousel-slide>
+
+          <q-carousel-slide name="email" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <div>
+                <q-input outlined v-model="email" label="您的邮箱"  />
+              </div>
+              <div class="sub_but">
+                <q-btn color="primary" label="下一页" @click="goToNextPanel()" />
+              </div>
+            </div>
+          </q-carousel-slide>
+
+          <q-carousel-slide name="q49" class=" no-wrap flex-center">
+            <div class="q-mt-md">
+              <q-btn color="primary" label="提交答案" @click="submit()" />
+              <q-btn color="secondary" label="回到首页" @click="goToPanel('q1')" />
             </div>
           </q-carousel-slide>
         </q-carousel>
@@ -713,6 +1523,7 @@ export default {
       q7_answer_qita: '',
       q9_answer_qita: '',
       q19_answer_qita: '',
+      q22_answer_qita: '',
       q8_answer_qita: '',
       q10_answer: [],
       q3_answer_qita: '',
@@ -813,6 +1624,16 @@ export default {
         { label: '5.大学本科', value: '5' },
         { label: '6.硕士及以上', value: '6' }
       ],
+      q18_answer_1: '',
+      q18_answer_2: '',
+      q18_answer_3: '',
+      q18_answer_4: '',
+      q18_answer_5: '',
+      q18_answer_6: '',
+      q18_answer_7: '',
+      q18_answer_8: '',
+      q18_answer_9: '',
+      q18_answer_10: '',
       q46_answer: '',
       q46_options: [
         { label: '1.15岁以下', value: '1' },
@@ -913,6 +1734,16 @@ export default {
         { label: '5.一个月以内', value: '5' },
         { label: '6.一个月以上', value: '6' }
       ],
+      q22_answer: [],
+      q22_options: [
+        { label: '1.航空意外险', value: '1' },
+        { label: '2.交通意外险', value: '2' },
+        { label: '3.旅游意外险', value: '3' },
+        { label: '4.一般意外险', value: '4' },
+        { label: '5.旅游救助险', value: '5' },
+        { label: '6.旅行社责任险', value: '6' },
+        { label: '7.其他（请注明）', value: '7' }
+      ],
       q36_answer: '',
       q36_options: [
         { label: '1.是，已经预定/出行了', value: '1' },
@@ -926,6 +1757,7 @@ export default {
         { label: '2.没有', value: '2' }
       ],
       q33_answer: '',
+      email: '',
       q33_options: [
         { label: '1.很好', value: '1' },
         { label: '2.还行', value: '2' },
@@ -960,10 +1792,11 @@ export default {
         { label: '4.不是，我现在没有前往中国的计划', value: '4' },
         { label: '5.其他', value: '5' }
       ],
+      q28_answer: '',
       q40_answer: '',
       q40_options: [
         { label: '1.春', value: '1' },
-        { label: '2.', value: '2' },
+        { label: '2.夏', value: '2' },
         { label: '3.秋', value: '3' },
         { label: '4.冬', value: '4' }
       ],
@@ -983,14 +1816,71 @@ export default {
         { label: '4.完全没有影响', value: '4' }
       ],
       q43_answer: '',
+      q17_answer_1: '',
+      q17_answer_2: '',
+      q17_answer_3: '',
+      q17_answer_4: '',
+      q29_answer: '',
+      q17_answer_5: '',
       q43_options: [
         { label: '1.男', value: '1' },
         { label: '2.女', value: '2' }
       ],
+      q24_answer_chengshixingxiang: '',
+      q24_answer_chengshifuwushuip: '',
+      q23_answer_lanzhou: '',
+      q23_answer_xining: '',
+      q23_answer_zhuhai: '',
+      q23_answer_shenzhen: '',
+      q23_answer_guilin: '',
+      q23_answer_kunming: '',
+      q23_answer_chengde: '',
+      q23_answer_hangzhou: '',
+      q23_answer_chengdu: '',
+      q23_answer_nanjing: '',
+      q23_answer_suzhou: '',
+      q23_answer_tianjin: '',
+      q23_answer_guangzhou: '',
+      q23_answer_xian: '',
+      q23_answer_shenyang: '',
+      q23_answer_chongqing: '',
+      q23_answer_shanghai: '',
+      q23_answer_beijing: '',
+      q25_answer_chengshifuwuzhiliangyuqi: '',
+      q25_answer_lvyoufuwuzhiliangyuqi: '',
+      q26_answer_lvyouzhiliangshifouheli: '',
+      q26_answer_jiagexiangfu: '',
+      q27_answer_xiandaihua: '',
+      q27_answer_meili: '',
+      q27_answer_zhimingdu: '',
+      q27_answer_kaifangdu: '',
+      q27_answer_xinxihua: '',
+      q30_answer_zongti: '',
+      q30_answer_biaozhunhua: '',
+      q30_answer_gonggongfuwu: '',
+      q30_answer_fapiao: '',
+      q30_answer_chanpinfuwuzhiliang: '',
+      q30_answer_daoyou: '',
+      q30_answer_lvxingshe: '',
+      q30_answer_jingdian: '',
+      q34_answer_tuijian: '',
+      q34_answer_jixu: '',
+      q34_answer_zijichongyou: '',
+      q30_answer_wenhua: '',
+      q30_answer_gouwu: '',
+      q30_answer_zhusu: '',
+      q30_answer_canyin: '',
+      q30_answer_jiaotong: '',
       lorem: 'I love you'
     }
   },
   methods: {
+    goToPanel (panel) {
+      this.slide = panel
+    },
+    submit () {
+      alert('finished')
+    },
     goToNextPanel () {
       this.$refs.carousel.next()
     },
