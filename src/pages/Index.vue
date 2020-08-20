@@ -17,9 +17,24 @@
             </q-card-actions>
           </q-card>
         </q-dialog>
-        <q-btn color="primary" label="末尾" @click="goToPanel('q49')" />
+        <q-dialog v-model="alertSuccess">
+          <q-card>
+            <q-card-section>
+              <div class="text-h6">成功</div>
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">
+              完成问卷!!!
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn flat label="OK" color="primary" v-close-popup />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+        <!-- <q-btn color="primary" label="末尾" @click="goToPanel('q49')" />
         <q-btn color="primary" label="Go" @click="goToPanel(tttt)" />
-        <q-input outlined v-model="tttt" />
+        <q-input outlined v-model="tttt" /> -->
 
         <q-carousel
           ref="carousel"
@@ -1528,6 +1543,7 @@ export default {
   data () {
     return {
       tttt: '',
+      alertSuccess: false,
       q2_answer_dict: {
         1: '1. 是',
         2: '2. 否'
@@ -2245,14 +2261,13 @@ export default {
       this.things2submit.q47 = this.q47_answer_dict[this.q47_answer] == null ? this.q47_answer_qita : this.q47_answer_dict[this.q47_answer]
       this.things2submit.q48 = this.q48_answer_dict[this.q48_answer]
 
-      axios.get('/api/v1/user', {
-        test: 'test'
-      }).then(response => {
+      axios.post('/***', this.things2submit).then(response => {
         console.log('normal')
+        this.alertSuccess = true;
       }).catch(e => {
+        alert('提交到后台异常')
         console.log('bad')
       })
-
       console.log(this.things2submit)
     },
     combineMulti (dic, arr, plaintext) {
